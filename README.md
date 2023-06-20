@@ -1,4 +1,4 @@
-# plant_tracker
+# H2Owatch
 
 A new Flutter project.
 
