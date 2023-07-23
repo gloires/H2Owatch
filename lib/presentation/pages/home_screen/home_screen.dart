@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plant_tracker/presentation/pages/add_plant_screen.dart';
-import 'package:plant_tracker/presentation/widgets/water_plant_item.dart';
+import 'package:plant_tracker/presentation/pages/home_screen/plants_list_view.dart';
+import 'package:routemaster/routemaster.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,11 +8,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void addButtonPress() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const AddPlantScreen(),
-        ),
-      );
+      Routemaster.of(context).push('add_plant');
     }
 
     return Positioned.fill(
@@ -65,29 +61,9 @@ class HomeScreen extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(
-              height: (MediaQuery.of(context).size.height / 2) - 45,
-              child: const SingleChildScrollView(
-                child: Column(
-                  children: [
-                    WaterPlantItem(
-                      name: 'Phillip',
-                      subtitle: 'echeveria agavoides',
-                    ),
-                    WaterPlantItem(
-                      name: 'Mary',
-                      subtitle: 'haworthia floribunda',
-                    ),
-                    WaterPlantItem(
-                      name: 'Dazzy',
-                      subtitle: 'haworthia floribunda',
-                    ),
-                    WaterPlantItem(
-                      name: 'Harold',
-                      subtitle: 'haworthia floribunda',
-                    ),
-                  ],
-                ),
-              ),
+              height: (MediaQuery.of(context).size.height / 2) -
+                  AppBar().preferredSize.height - 10,
+              child: const PlantsListView(),
             ),
           ),
         ],

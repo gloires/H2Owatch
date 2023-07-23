@@ -38,6 +38,17 @@ dependencies:
   phosphor_flutter: ^1.4.0
   flutter_bloc: ^8.1.3
   day_night_time_picker: ^1.3.0
+  sprintf: ^7.0.0
+  flutter_typeahead: ^4.6.2
+  http: ^1.0.0
+  intl: ^0.18.1
+  get_it: ^7.6.0
+  equatable: ^2.0.5
+  sqflite: ^2.2.8+4
+  routemaster: ^1.0.1
+  one_month_calendar:
+    path: packages/one_month_calendar
+  image_picker: ^1.0.0
 
 dev_dependencies:
   flutter_test:
