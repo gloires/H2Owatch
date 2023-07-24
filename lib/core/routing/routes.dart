@@ -14,7 +14,7 @@ final routes = RoutemasterDelegate(
       routes: {
         '/': (route) => MaterialPage(
               child: BlocProvider.value(
-                value: addPlantBloc,
+                value: addPlantBloc..add(AddPlantLoadListEvent()),
                 child: const NavigationScreen(),
               ),
             ),
