@@ -16,7 +16,7 @@ class PlantDatasourceImpl implements PlantDatasource {
 
     List<Map> list = await database.rawQuery("""
         SELECT 
-          name, type, image, date, 
+          id, name, type, image, date, 
           summer_period, summer_repetition,
           winter_period, winter_repetition
         FROM 
@@ -24,7 +24,7 @@ class PlantDatasourceImpl implements PlantDatasource {
         ORDER BY id ASC
           """);
     for (final item in list) {
-      final invoice = PlantModel(
+      final plant = PlantModel(
         id: item["id"] ?? 0,
         name: item["name"] ?? 0,
         type: item["type"] ?? 0,
@@ -35,7 +35,7 @@ class PlantDatasourceImpl implements PlantDatasource {
         winterPeriod: item["winter_period"] ?? 0,
         winterRepetition: item["winter_repetition"] ?? 0,
       );
-      result.add(invoice);
+      result.add(plant);
     }
 
     return result;

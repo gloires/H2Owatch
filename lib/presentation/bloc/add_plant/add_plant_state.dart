@@ -9,19 +9,23 @@ abstract class AddPlantState extends Equatable {
 
 class AddPlantInitialState extends AddPlantState {}
 
+class AddPlantStartState extends AddPlantState {}
+
+class AddPlantClearState extends AddPlantState {}
+
 class AddPlantPreparedState extends AddPlantState {
   final List<PlantTypeEntity> plantTypes;
+  final PlantEntity plant;
 
   const AddPlantPreparedState({
     required this.plantTypes,
+    required this.plant,
   });
 }
 
 class AddPlantSavedState extends AddPlantState {}
 
 class AddPlantLoadingListState extends AddPlantState {}
-
-class AddPlantLoadingTodayListState extends AddPlantState {}
 
 class AddPlantEmptyState extends AddPlantState {}
 

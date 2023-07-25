@@ -36,4 +36,18 @@ class PlantModel extends PlantEntity {
       date: plant.date.millisecondsSinceEpoch ~/ 1000,
     );
   }
+
+  PlantModel toEntity() {
+    return PlantModel(
+      id: id,
+      name: name,
+      type: type,
+      imagePath: imagePath,
+      summerPeriod: summerPeriod,
+      summerRepetition: summerRepetition,
+      winterPeriod: winterPeriod,
+      winterRepetition: winterRepetition,
+      date: date.millisecondsSinceEpoch ~/ 1000,
+    );
+  }
 }

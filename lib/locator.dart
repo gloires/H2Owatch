@@ -3,8 +3,9 @@ import 'package:plant_tracker/data/add_plant/add_plant_sqlite_datasource.dart';
 import 'package:plant_tracker/data/plant/plant_datasource.dart';
 import 'package:plant_tracker/data/plant/plant_repository_impl.dart';
 import 'package:plant_tracker/domain/repositories/plant_repository.dart';
+import 'package:plant_tracker/domain/usecases/add_plant/get_plant.dart';
 import 'package:plant_tracker/domain/usecases/add_plant/insert_plant.dart';
-import 'package:plant_tracker/domain/usecases/plant/get_all_plants.dart';
+import 'package:plant_tracker/domain/usecases/add_plant/get_all_plants.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:plant_tracker/data/add_plant/add_plant_firebase_datasource.dart';
 import 'package:plant_tracker/data/add_plant/add_plant_repository_impl.dart';
@@ -22,6 +23,7 @@ Future<void> init() async {
       getPlantTypes: sl(),
       insertPlant: sl(),
       getAllPlants: sl(),
+      getPlant: sl(),
     ),
   );
 
@@ -40,6 +42,11 @@ Future<void> init() async {
   );
   sl.registerLazySingleton(
         () => InsertPlant(
+      addPlantRepository: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+        () => GetPlant(
       addPlantRepository: sl(),
     ),
   );

@@ -7,7 +7,20 @@ abstract class AddPlantEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddPlantPrepareEvent extends AddPlantEvent {}
+class AddPlantPrepareEvent extends AddPlantEvent {
+  final int plantID;
+
+  const AddPlantPrepareEvent({
+    required this.plantID,
+  });
+
+  @override
+  List<Object> get props => [
+    plantID,
+  ];
+}
+
+class AddPlantClearEvent extends AddPlantEvent {}
 
 class AddPlantInsertEvent extends AddPlantEvent {
   final String name;
@@ -48,5 +61,3 @@ class AddPlantDeleteEvent extends AddPlantEvent {}
 class AddPlantEditEvent extends AddPlantEvent {}
 
 class AddPlantLoadListEvent extends AddPlantEvent {}
-
-class AddPlantLoadTodayListEvent extends AddPlantEvent {}

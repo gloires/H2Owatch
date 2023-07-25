@@ -54,4 +54,10 @@ class AddPlantRepositoryImpl implements AddPlantRepository {
       winterRepetition,
     );
   }
+
+  @override
+  Future<PlantEntity> getPlant(int plantID) async{
+    final p = await addPlantSqliteDatasource.getPlant(plantID);
+    return p.toEntity();
+  }
 }

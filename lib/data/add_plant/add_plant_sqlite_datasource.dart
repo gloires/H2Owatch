@@ -16,6 +16,8 @@ abstract class AddPlantSqliteDatasource {
   Future<void> edit(PlantModel plant, int id);
 
   Future<void> delete(int plantID);
+  
+  Future<PlantModel> getPlant(int plantID);
 }
 
 class AddPlantSqliteDatasourceImpl implements AddPlantSqliteDatasource {
@@ -92,5 +94,37 @@ class AddPlantSqliteDatasourceImpl implements AddPlantSqliteDatasource {
         winterRepetition,
       ],
     );
+  }
+
+  @override
+  Future<PlantModel> getPlant(int id) async {
+    List<PlantModel> result = [];
+
+    List<Map> list = await database.rawQuery("""
+      SELECT 
+        id, name, type, image, date, 
+        summer_period, summer_repetition,
+        winter_period, winter_repetition
+      FROM 
+        plants
+      WHERE
+        id = ?
+    """, [id]);
+    for (final item in list) {
+      final plant = PlantModel(
+        id: item["id"] ?? 0,
+        name: item["name"] ?? 0,
+        type: item["type"] ?? 0,
+        imagePath: item["image"] ?? 0,
+        date: item["date"] ?? "",
+        summerPeriod: item["summer_period"] ?? "",
+        summerRepetition: item["summer_repetition"] ?? 0,
+        winterPeriod: item["winter_period"] ?? 0,
+        winterRepetition: item["winter_repetition"] ?? 0,
+      );
+      result.add(plant);
+    }
+
+    return result.first;
   }
 }

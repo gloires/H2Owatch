@@ -36,6 +36,9 @@ class PlantEntity extends Equatable {
       winterRepetition: 0,
     );
   }
+  bool isEmpty() {
+    return id < 0 || type.isEmpty;
+  }
 
   @override
   List<Object?> get props => [

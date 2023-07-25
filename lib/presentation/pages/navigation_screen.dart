@@ -5,6 +5,7 @@ import 'package:plant_tracker/presentation/pages/calendar_screen.dart';
 import 'package:plant_tracker/presentation/pages/home_screen/home_screen.dart';
 import 'package:plant_tracker/presentation/widgets/change_list_button.dart';
 import 'package:plant_tracker/presentation/widgets/change_screen_button.dart';
+import 'package:routemaster/routemaster.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({Key? key}) : super(key: key);
@@ -27,18 +28,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
   }
 
   void _setScreen() {
+    _addPlantBloc.add(AddPlantLoadListEvent());
     setState(() {
       _isHomeScreen = !_isHomeScreen;
-    });
- /*   if(_isHomeScreen) {
-      _addPlantBloc.add(AddPlantLoadTodayListEvent());
-    } else {
-      _addPlantBloc.add(AddPlantLoadListEvent());
-    }*/
-  }
-
-  void _setList() {
-    setState(() {
     });
   }
 
@@ -71,7 +63,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
             activeScreen,
             if (_isHomeScreen)
               ChangeListButton(
-                onTap: _setList,
+                onTap: () => Routemaster.of(context).push('list'),
               ),
             ChangeScreenButton(
               onTap: _setScreen,

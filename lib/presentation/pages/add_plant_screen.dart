@@ -7,13 +7,20 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:plant_tracker/core/theme/theme.dart';
+import 'package:plant_tracker/domain/entities/plant_entity.dart';
 import 'package:plant_tracker/domain/entities/plant_type_entity.dart';
 import 'package:plant_tracker/presentation/bloc/add_plant/add_plant_bloc.dart';
 import 'package:plant_tracker/presentation/widgets/add_plant/save_button.dart';
 import 'package:plant_tracker/presentation/widgets/add_plant/settings_for_new_item.dart';
+import 'package:routemaster/routemaster.dart';
 
 class AddPlantScreen extends StatefulWidget {
-  const AddPlantScreen({Key? key}) : super(key: key);
+  final int plantID;
+
+  const AddPlantScreen({
+    Key? key,
+    required this.plantID,
+  }) : super(key: key);
 
   @override
   State<AddPlantScreen> createState() => _AddPlantScreenState();
@@ -46,9 +53,12 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
 
   File? image;
 
-  Future _pickImage() async {
+  PlantEntity _plant = PlantEntity.empty();
+
+  Future<void> _pickImage() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      final XFile? image =
+          await ImagePicker().pickImage(source: ImageSource.camera);
       if (image == null) return;
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
@@ -59,15 +69,21 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
 
   void _changeSummerFrequencyText() {
     setState(() {
+      if(_selectedSummerRepetitionFrequency == -1) {
+        _selectedSummerRepetitionFrequency = 1;
+      }
       switch (_selectedSummerPeriodFrequency) {
         case 0:
-          _frequencySummerText = 'Кожен $_selectedSummerRepetitionFrequency день';
+          _frequencySummerText =
+              'Кожен $_selectedSummerRepetitionFrequency день';
           break;
         case 1:
-          _frequencySummerText = 'Кожен $_selectedSummerRepetitionFrequency тиждень';
+          _frequencySummerText =
+              'Кожен $_selectedSummerRepetitionFrequency тиждень';
           break;
         case 2:
-          _frequencySummerText = 'Кожен $_selectedSummerRepetitionFrequency місяць';
+          _frequencySummerText =
+              'Кожен $_selectedSummerRepetitionFrequency місяць';
           break;
         default:
           _frequencySummerText = 'Ніколи';
@@ -77,15 +93,21 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
 
   void _changeWinterFrequencyText() {
     setState(() {
+      if(_selectedWinterRepetitionFrequency == -1) {
+        _selectedWinterRepetitionFrequency = 1;
+      }
       switch (_selectedWinterPeriodFrequency) {
         case 0:
-          _frequencyWinterText = 'Кожен $_selectedWinterRepetitionFrequency день';
+          _frequencyWinterText =
+              'Кожен $_selectedWinterRepetitionFrequency день';
           break;
         case 1:
-          _frequencyWinterText = 'Кожен $_selectedWinterRepetitionFrequency тиждень';
+          _frequencyWinterText =
+              'Кожен $_selectedWinterRepetitionFrequency тиждень';
           break;
         case 2:
-          _frequencyWinterText = 'Кожен $_selectedWinterRepetitionFrequency місяць';
+          _frequencyWinterText =
+              'Кожен $_selectedWinterRepetitionFrequency місяць';
           break;
         default:
           _frequencyWinterText = 'Ніколи';
@@ -113,11 +135,16 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
 
   void _addSummerRepetition() {
     setState(() {
-      if (_selectedSummerRepetitionFrequency == 6 && _selectedSummerPeriodFrequency == 0) {
+      if(_selectedSummerRepetitionFrequency == -1) {
+        _selectedSummerRepetitionFrequency = 1;
+      }
+      if (_selectedSummerRepetitionFrequency == 6 &&
+          _selectedSummerPeriodFrequency == 0) {
         _selectedSummerRepetitionFrequency = 0;
         _selectedSummerPeriodFrequency = 1;
       }
-      if (_selectedSummerRepetitionFrequency == 3 && _selectedSummerPeriodFrequency == 1) {
+      if (_selectedSummerRepetitionFrequency == 3 &&
+          _selectedSummerPeriodFrequency == 1) {
         _selectedSummerRepetitionFrequency = 0;
         _selectedSummerPeriodFrequency = 2;
       }
@@ -128,11 +155,16 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
 
   void _addWinterRepetition() {
     setState(() {
-      if (_selectedWinterRepetitionFrequency == 6 && _selectedWinterPeriodFrequency == 0) {
+      if(_selectedWinterRepetitionFrequency == -1) {
+        _selectedWinterRepetitionFrequency = 1;
+      }
+      if (_selectedWinterRepetitionFrequency == 6 &&
+          _selectedWinterPeriodFrequency == 0) {
         _selectedWinterRepetitionFrequency = 0;
         _selectedWinterPeriodFrequency = 1;
       }
-      if (_selectedWinterRepetitionFrequency == 3 && _selectedWinterPeriodFrequency == 1) {
+      if (_selectedWinterRepetitionFrequency == 3 &&
+          _selectedWinterPeriodFrequency == 1) {
         _selectedWinterRepetitionFrequency = 0;
         _selectedWinterPeriodFrequency = 2;
       }
@@ -143,11 +175,16 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
 
   void _removeSummerRepetition() {
     setState(() {
-      if (_selectedSummerPeriodFrequency == 1 && _selectedSummerRepetitionFrequency == 1) {
+      if(_selectedSummerRepetitionFrequency == -1) {
+        _selectedSummerRepetitionFrequency = 1;
+      }
+      if (_selectedSummerPeriodFrequency == 1 &&
+          _selectedSummerRepetitionFrequency == 1) {
         _selectedSummerRepetitionFrequency = 7;
         _selectedSummerPeriodFrequency = 0;
       }
-      if (_selectedSummerPeriodFrequency == 2 && _selectedSummerRepetitionFrequency == 1) {
+      if (_selectedSummerPeriodFrequency == 2 &&
+          _selectedSummerRepetitionFrequency == 1) {
         _selectedSummerRepetitionFrequency = 4;
         _selectedSummerPeriodFrequency = 1;
       }
@@ -160,11 +197,16 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
 
   void _removeWinterRepetition() {
     setState(() {
-      if (_selectedWinterPeriodFrequency == 1 && _selectedWinterRepetitionFrequency == 1) {
+      if(_selectedWinterRepetitionFrequency == -1) {
+        _selectedWinterRepetitionFrequency = 1;
+      }
+      if (_selectedWinterPeriodFrequency == 1 &&
+          _selectedWinterRepetitionFrequency == 1) {
         _selectedWinterRepetitionFrequency = 7;
         _selectedWinterPeriodFrequency = 0;
       }
-      if (_selectedWinterPeriodFrequency == 2 && _selectedWinterRepetitionFrequency == 1) {
+      if (_selectedWinterPeriodFrequency == 2 &&
+          _selectedWinterRepetitionFrequency == 1) {
         _selectedWinterRepetitionFrequency = 4;
         _selectedWinterPeriodFrequency = 1;
       }
@@ -186,11 +228,31 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
     });
 
     _addPlantBloc = BlocProvider.of<AddPlantBloc>(context);
-    _addPlantBloc.add(AddPlantPrepareEvent());
+    _addPlantBloc.add(AddPlantPrepareEvent(plantID: widget.plantID));
+
+    _nameController.text = '';
+    _latinNameController.text = '';
+    image = null;
+    _selectedWinterRepetitionFrequency = -1;
+    _selectedWinterPeriodFrequency = -1;
+    _selectedSummerRepetitionFrequency = -1;
+    _selectedSummerPeriodFrequency = -1;
 
     final state = _addPlantBloc.state;
     if (state is AddPlantPreparedState) {
       _plantTypeSuggestions = state.plantTypes;
+      _plant = state.plant;
+      if (!_plant.isEmpty()) {
+        _nameController.text = _plant.name;
+        _latinNameController.text = _plant.type;
+        image = _plant.imagePath == '' ? null : File(_plant.imagePath);
+        _selectedWinterRepetitionFrequency = _plant.winterRepetition;
+        _selectedWinterPeriodFrequency = _plant.winterPeriod;
+        _selectedSummerRepetitionFrequency = _plant.summerRepetition;
+        _selectedSummerPeriodFrequency = _plant.summerPeriod;
+        _changeSummerFrequencyText();
+        _changeWinterFrequencyText();
+      }
     }
   }
 
@@ -209,17 +271,35 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
       listener: (context, state) {
         if (state is AddPlantPreparedState) {
           _plantTypeSuggestions = state.plantTypes;
+          _plant = state.plant;
+          if (!_plant.isEmpty()) {
+            setState(() {
+              _nameController.text = _plant.name;
+              _latinNameController.text = _plant.type;
+              image = _plant.imagePath == '' ? null : File(_plant.imagePath);
+              _selectedWinterRepetitionFrequency = _plant.winterRepetition;
+              _selectedWinterPeriodFrequency = _plant.winterPeriod;
+              _selectedSummerRepetitionFrequency = _plant.summerRepetition;
+              _selectedSummerPeriodFrequency = _plant.summerPeriod;
+              _changeSummerFrequencyText();
+              _changeWinterFrequencyText();
+            });
+          }
         }
       },
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(
-              PhosphorIcons.caretLeft,
-              color: kColorScheme.background,
-              size: 30,
+            icon: const Icon(
+              PhosphorIcons.caretLeftBold,
+              color: Colors.white,
             ),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Routemaster.of(context).pop(),
+          ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(40),
+            ),
           ),
           title: const Text(
             'Додати нову квітку',
@@ -375,9 +455,10 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                                     .toList();
                             List<PlantTypeEntity> filteredList = namesLatin
                                 .where(
-                                  (element) => element.name.toLowerCase().contains(
-                                        pattern.toLowerCase(),
-                                      ),
+                                  (element) =>
+                                      element.name.toLowerCase().contains(
+                                            pattern.toLowerCase(),
+                                          ),
                                 )
                                 .toList();
                             return filteredList;
@@ -411,14 +492,15 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                   ),
                   SettingsForNewItem(
                     selectedSummerPeriod: _selectedSummerPeriodFrequency,
-                    selectedSummerRepetition: _selectedSummerRepetitionFrequency,
+                    selectedSummerRepetition:
+                        _selectedSummerRepetitionFrequency,
                     addSummerRepetition: _addSummerRepetition,
                     removeSummerRepetition: _removeSummerRepetition,
                     onTapSummer: _valueChangedSummerFrequencyHandler(),
                     titleSummer: _frequencySummerText,
-
                     selectedWinterPeriod: _selectedWinterPeriodFrequency,
-                    selectedWinterRepetition: _selectedWinterRepetitionFrequency,
+                    selectedWinterRepetition:
+                        _selectedWinterRepetitionFrequency,
                     addWinterRepetition: _addWinterRepetition,
                     removeWinterRepetition: _removeWinterRepetition,
                     onTapWinter: _valueChangedWinterFrequencyHandler(),
@@ -435,10 +517,18 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
               name: _nameController.text,
               type: _latinNameController.text,
               imagePath: image != null ? image!.path : '',
-              summerPeriod: _selectedSummerPeriodFrequency == -1 ? _typeSummerPeriod : _selectedSummerPeriodFrequency,
-              summerRepetition: _selectedSummerRepetitionFrequency == -1 ? _typeSummerRepetition : _selectedSummerRepetitionFrequency,
-              winterPeriod: _selectedWinterPeriodFrequency == -1 ? _typeWinterPeriod : _selectedWinterPeriodFrequency,
-              winterRepetition: _selectedWinterRepetitionFrequency == -1 ? _typeWinterRepetition : _selectedWinterRepetitionFrequency,
+              summerPeriod: _selectedSummerPeriodFrequency == -1
+                  ? _typeSummerPeriod
+                  : _selectedSummerPeriodFrequency,
+              summerRepetition: _selectedSummerRepetitionFrequency == -1
+                  ? _typeSummerRepetition
+                  : _selectedSummerRepetitionFrequency,
+              winterPeriod: _selectedWinterPeriodFrequency == -1
+                  ? _typeWinterPeriod
+                  : _selectedWinterPeriodFrequency,
+              winterRepetition: _selectedWinterRepetitionFrequency == -1
+                  ? _typeWinterRepetition
+                  : _selectedWinterRepetitionFrequency,
             ),
           ],
         ),

@@ -29,7 +29,6 @@ class SettingsForNewItem extends StatefulWidget {
     required this.addSummerRepetition,
     required this.removeSummerRepetition,
     required this.titleSummer,
-
     required this.selectedWinterPeriod,
     required this.selectedWinterRepetition,
     required this.onTapWinter,
@@ -98,13 +97,17 @@ class _SettingsForNewItemState extends State<SettingsForNewItem> {
         Row(
           children: [
             IconButton(
-              onPressed: (){
+              onPressed: () {
                 setState(() {
                   _summer = !_summer;
                 });
               },
               icon: Icon(
-                !_autoSelect ? PhosphorIcons.calendarBlankBold : _summer ? PhosphorIcons.sun : PhosphorIcons.snowflake,
+                !_autoSelect
+                    ? PhosphorIcons.calendarBlankBold
+                    : _summer
+                        ? PhosphorIcons.sun
+                        : PhosphorIcons.snowflake,
                 color: _autoSelect
                     ? kColorScheme.primary
                     : kColorScheme.onBackground,
@@ -171,19 +174,25 @@ class _SettingsForNewItemState extends State<SettingsForNewItem> {
                     FrequencyEventButton(
                       title: 'День',
                       value: 0,
-                      selectedValue: _summer ? widget.selectedSummerPeriod : widget.selectedWinterPeriod,
+                      selectedValue: _summer
+                          ? widget.selectedSummerPeriod
+                          : widget.selectedWinterPeriod,
                       onTap: _summer ? widget.onTapSummer : widget.onTapWinter,
                     ),
                     FrequencyEventButton(
                       title: 'Тиждень',
                       value: 1,
-                      selectedValue: _summer ? widget.selectedSummerPeriod : widget.selectedWinterPeriod,
+                      selectedValue: _summer
+                          ? widget.selectedSummerPeriod
+                          : widget.selectedWinterPeriod,
                       onTap: _summer ? widget.onTapSummer : widget.onTapWinter,
                     ),
                     FrequencyEventButton(
                       title: 'Місяць',
                       value: 2,
-                      selectedValue: _summer ? widget.selectedSummerPeriod : widget.selectedWinterPeriod,
+                      selectedValue: _summer
+                          ? widget.selectedSummerPeriod
+                          : widget.selectedWinterPeriod,
                       onTap: _summer ? widget.onTapSummer : widget.onTapWinter,
                     ),
                   ],
@@ -207,14 +216,24 @@ class _SettingsForNewItemState extends State<SettingsForNewItem> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        onPressed: _summer ? widget.removeSummerRepetition : widget.removeWinterRepetition,
+                        onPressed: _summer
+                            ? widget.removeSummerRepetition
+                            : widget.removeWinterRepetition,
                         icon: const Icon(PhosphorIcons.minusBold),
                       ),
                       Text(
-                        _summer ? widget.selectedSummerRepetition.toString() : widget.selectedWinterRepetition.toString(),
+                        _summer
+                            ? widget.selectedSummerRepetition != -1
+                                ? widget.selectedSummerRepetition.toString()
+                                : '1'
+                            : widget.selectedWinterRepetition != -1
+                                ? widget.selectedWinterRepetition.toString()
+                                : '1',
                       ),
                       IconButton(
-                        onPressed: _summer ? widget.addSummerRepetition : widget.addWinterRepetition,
+                        onPressed: _summer
+                            ? widget.addSummerRepetition
+                            : widget.addWinterRepetition,
                         icon: const Icon(PhosphorIcons.plusBold),
                       ),
                     ],

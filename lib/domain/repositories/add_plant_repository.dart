@@ -4,6 +4,8 @@ import 'package:plant_tracker/domain/entities/plant_type_entity.dart';
 abstract class AddPlantRepository {
   Future<List<PlantTypeEntity>> getPlantTypes();
 
+  Future<PlantEntity> getPlant(int plantID);
+
   Future<int> insert(
     String name,
     String type,

@@ -416,7 +416,7 @@ class _CalendarState extends State<Calendar> {
   Widget get eventList {
     return _selectedEvents != null && _selectedEvents!.isNotEmpty
         ? Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: const EdgeInsets.only(top: 10.0),
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: _selectedEvents!.length,
@@ -459,7 +459,8 @@ class _CalendarState extends State<Calendar> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: FileImage(File(_selectedEvents![index].imagePath)),
+                                    image: FileImage(File(
+                                        _selectedEvents![index].imagePath)),
                                     fit: BoxFit.cover,
                                   ),
                                   boxShadow: [
@@ -572,10 +573,10 @@ class _CalendarState extends State<Calendar> {
     }
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      // mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          height: (MediaQuery.of(context).size.height / 2) - 6,
+          height: (MediaQuery.of(context).size.height / 2) +
+              AppBar().preferredSize.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -593,8 +594,12 @@ class _CalendarState extends State<Calendar> {
           ),
         ),
         Expanded(
-          child: eventList,
-        )
+          child: SizedBox(
+            height: (MediaQuery.of(context).size.height / 2) -
+                AppBar().preferredSize.height - 25,
+            child: eventList,
+          ),
+        ),
       ],
     );
   }
